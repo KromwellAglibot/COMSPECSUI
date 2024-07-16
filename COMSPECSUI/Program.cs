@@ -10,11 +10,12 @@ namespace Client
         {
             ModelGetServices getServices = new ModelGetServices();
 
-            var song = getServices.GetAllUsers();
+            var comp = getServices.GetAllUsers();
 
-            foreach (var item in song)
+            foreach (var item in comp)
             {
                 Console.WriteLine(item.Userid);
+                Console.WriteLine(item.password);
             }
 
         }

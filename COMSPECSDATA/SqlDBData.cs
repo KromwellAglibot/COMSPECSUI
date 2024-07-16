@@ -7,8 +7,8 @@ namespace COMSPECSDATA
     {
 
         string connectionString
-        = "Data Source =DESKTOP-7NDQCQL\\SQLEXPRESS; Initial Catalog = COMSPECSUI; Integrated Security = True;";
-
+        // = "Data Source =KROMWELL\\SQLEXPRESS; Initial Catalog = COMSPECSUI; Integrated Security = True;";
+        = "Server = tcp:207.46.154.243,1433; Database = COMSPECSUI; User Id = sa; Password = integ2!";
         SqlConnection sqlConnection;
 
         public SqlDbData()
@@ -18,7 +18,7 @@ namespace COMSPECSDATA
 
         public List<User> GetUsers()
         {
-            string selectStatement = "SELECT Userid FROM Comp";
+            string selectStatement = "SELECT Userid, password FROM Comp";
 
             SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
 
@@ -29,10 +29,12 @@ namespace COMSPECSDATA
 
             while (reader.Read())
             {
-                string Userid = reader["model"].ToString();
+                string Userid = reader["Userid"].ToString();
+                string password = reader["password"].ToString();
 
                 User readModel = new User();
                 readModel.Userid = Userid;
+                readModel.password = password;
 
                 model.Add(readModel);
             }
@@ -42,33 +44,36 @@ namespace COMSPECSDATA
             return model;
         }
 
-        public int AddModel(string Userid)
+        public int AddModel(string Userid, string password)
         {
             int success;
 
-            string insertStatement = "INSERT INTO Comp VALUES (@Userid)";
+            string insertStatement = "INSERT INTO Comp VALUES (@Userid, @password)";
 
             SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection);
 
             insertCommand.Parameters.AddWithValue("@Userid", Userid);
+            insertCommand.Parameters.AddWithValue("@password", password);
             sqlConnection.Open();
 
             success = insertCommand.ExecuteNonQuery();
+            //success = insertCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
 
             return success;
         }
 
-        public int UpdateModel(string Userid)
+        public int UpdateModel(string Userid, string password)
         {
             int success;
 
-            string updateStatement = $"UPDATE model SET Userid = @Userid WHERE Userid = @Userid";
+            string updateStatement = $"UPDATE Comp SET password = @password WHERE Userid = @Userid";
             SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
             sqlConnection.Open();
 
             updateCommand.Parameters.AddWithValue("@Userid", Userid);
+            updateCommand.Parameters.AddWithValue("@password", password);
 
             success = updateCommand.ExecuteNonQuery();
 
@@ -77,15 +82,16 @@ namespace COMSPECSDATA
             return success;
         }
 
-        public int DeleteModel(string Userid)
+        public int DeleteModel(string Userid, string password)
         {
             int success;
 
-            string deleteStatement = $"DELETE FROM model WHERE Userid = @Userid";
+            string deleteStatement = $"DELETE FROM Comp WHERE Userid = @Userid";
             SqlCommand deleteCommand = new SqlCommand(deleteStatement, sqlConnection);
             sqlConnection.Open();
 
             deleteCommand.Parameters.AddWithValue("@Userid", Userid);
+           
 
             success = deleteCommand.ExecuteNonQuery();
 

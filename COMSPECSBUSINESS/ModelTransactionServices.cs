@@ -20,14 +20,14 @@ namespace COMSPECSBUSINESS
             return result;
         }
 
-        public bool CreateUser(string Userid)
+        public bool CreateUser(string Userid, string password)
         {
-            User users = new User { Userid = Userid};
+            User users = new User { Userid = Userid, password = password};
 
             return CreateUser(users);
         }
 
-        public bool UpdateSongMap(User users)
+        public bool UpdateModel(User users)
         {
             bool result = false;
 
@@ -39,14 +39,14 @@ namespace COMSPECSBUSINESS
             return result;
         }
 
-        public bool UpdateModel(string Userid)
+        public bool UpdateModel(string Userid, string password)
         {
-            User users = new User { Userid = Userid};
+            User users = new User { Userid = Userid, password = password};
 
-            return UpdateModel(Userid);
+            return UpdateModel(users);
         }
 
-        public bool DeleteSongMap(User users)
+        public bool DeleteModel(User users)
         {
             bool result = false;
 
