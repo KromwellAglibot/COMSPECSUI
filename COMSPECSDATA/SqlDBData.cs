@@ -3,12 +3,12 @@ using System.Data.SqlClient;
 
 namespace COMSPECSDATA
 {
-    public class SqlDbData
+    public class SqlDbData 
     {
 
         string connectionString
         // = "Data Source =KROMWELL\\SQLEXPRESS; Initial Catalog = COMSPECSUI; Integrated Security = True;";
-        = "Server = tcp:207.46.154.243,1433; Database = COMSPECSUI; User Id = sa; Password = integ2!";
+        = "Server = tcp:20.255.250.13,1433; Database = COMSPECSUI; User Id = sa; Password = Kromwell1!";
         SqlConnection sqlConnection;
 
         public SqlDbData()
@@ -68,7 +68,7 @@ namespace COMSPECSDATA
         {
             int success;
 
-            string updateStatement = $"UPDATE Comp SET password = @password WHERE Userid = @Userid";
+            string updateStatement = $"UPDATE Comp SET Userid = @Userid WHERE password = @password";
             SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
             sqlConnection.Open();
 
